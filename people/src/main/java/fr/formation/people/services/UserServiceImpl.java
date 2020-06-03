@@ -1,5 +1,6 @@
 package fr.formation.people.services;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import fr.formation.people.dtos.UserCreateDto;
@@ -15,20 +16,24 @@ public class UserServiceImpl implements UserService {
 
 	private final RoleJpaRepository roleRepo;
 
-	public UserServiceImpl(UserJpaRepository userRepo, 
-			RoleJpaRepository roleRepo) {
+	private final PasswordEncoder encoder;
+
+	public UserServiceImpl(UserJpaRepository userRepo, RoleJpaRepository roleRepo, PasswordEncoder encoder) {
 		this.userRepo = userRepo;
 		this.roleRepo = roleRepo;
+		this.encoder = encoder;
 	}
 
 	@Override
 	public void create(UserCreateDto dto) {
 		User user = new User();
 		user.setUsername(dto.getUsername());
-		user.setPassword(dto.getPassword());
+		String rawPassword = dto.getPassword();
+		String encodedPassword = encoder.encode(rawPassword);
+		user.setPassword(encodedPassword);
+		user.setEnabled(true);
 		Role role = roleRepo.findByDefaultRoleTrue();
 		user.setRole(role);
 		userRepo.save(user);
 	}
-
 }

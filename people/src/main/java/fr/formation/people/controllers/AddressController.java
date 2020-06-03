@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +20,7 @@ import fr.formation.people.services.AddressService;
 // pour un type de ressources (Address).
 // Conventions : l'entité en minuscules, pluralisé, en Rest = une collection d'adresses
 @RestController
-@RequestMapping("/addresses") // http://localhost:8082/addresses
-@CrossOrigin
+@RequestMapping("/addresses") // http://localhost:8082/api/addresses
 public class AddressController {
 
 	// Inject une instance de AddressServiceImpl.
@@ -36,22 +34,22 @@ public class AddressController {
 		this.service = service;
 	}
 
-	@PostMapping // POST "/addresses" avec un JSON dans le corps de la requête
+	@PostMapping // POST "/api/addresses" avec un JSON dans le corps de la requête
 	public void create(@RequestBody @Valid AddressCreateDto dto) {
 		service.create(dto);
 	}
 
-	@DeleteMapping("/{id}") // DELETE "/addresses/1" ou 1 correspond à l'id d'une adresse existante en bdd
+	@DeleteMapping("/{id}") // DELETE "/api/addresses/1" ou 1 correspond à l'id d'une adresse existante en bdd
 	public void delete(@PathVariable("id") Long id) {
 		service.delete(id);
 	}
 
-	@GetMapping("/{id}") // GET "/addresses/1" ou 1 correspond à l'id d'une adresse existante en bdd
+	@GetMapping("/{id}") // GET "/api/addresses/1" ou 1 correspond à l'id d'une adresse existante en bdd
 	public AddressDto get(@PathVariable("id") Long id) {
 		return service.get(id);
 	}
 	
-	@GetMapping // GET "/addresses" pas d'id, retourne toute la collection de ressources
+	@GetMapping // GET "/api/addresses" pas d'id, retourne toute la collection de ressources
 	public List<AddressDto> getAll() {
 		return service.getAll();
 	}

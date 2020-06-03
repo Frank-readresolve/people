@@ -17,7 +17,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false, length = 256)
+	@Column(nullable = false, length = 256, unique = true)
 	private String username;
 
 	@Column(nullable = false, length = 60)
@@ -26,7 +26,10 @@ public class User {
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Role role;
-	
+
+	@Column(nullable = false)
+	private boolean enabled;
+
 	public User() {
 		// Pour le framework JPA
 	}
@@ -63,9 +66,18 @@ public class User {
 		this.role = role;
 	}
 
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
 	@Override
 	public String toString() {
-		return "{id=" + id + ", username=" + username + ", password=[PROTECTED], role=" + role + "}";
+		return "{id=" + id + ", username=" + username + ", password=[PROTECTED], role=" + role + ", enabled=" + enabled
+				+ "}";
 	}
 
 }

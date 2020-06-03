@@ -11,7 +11,7 @@ import fr.formation.people.dtos.UserCreateDto;
 import fr.formation.people.services.UserService;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/users") // "/api/users"
 public class UserController {
 
 	private final UserService service;
@@ -24,4 +24,5 @@ public class UserController {
 	public void create(@Valid @RequestBody UserCreateDto dto) {
 		service.create(dto);
 	}
+
 }

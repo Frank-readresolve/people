@@ -22,8 +22,8 @@ import fr.formation.people.services.PersonService;
 
 @RestController // On dit à Spring: ceci est un controller, tiens en compte
 @RequestMapping("/persons") // Correspondance url/code
-// http://localhost:8082/persons
-@CrossOrigin
+// http://localhost:8082/api/persons
+@CrossOrigin("*")
 public class PersonController {
 
 	private final PersonService service;
@@ -32,7 +32,7 @@ public class PersonController {
 		this.service = service;
 	}
 
-	// GET http://localhost:8082/persons/123
+	// GET http://localhost:8082/api/persons/123
 	// /{id} = path variable, variable de chemin
 	// /123 = récupérer dans id grace qu mapping "@PathVariable"
 	@GetMapping("/{id}")
@@ -40,7 +40,7 @@ public class PersonController {
 		return service.get(id);
 	}
 
-	@DeleteMapping("/{id}") // DELETE "/persons/1"
+	@DeleteMapping("/{id}") // DELETE "/api/persons/1"
 	public void delete(@PathVariable("id") Long id) {
 		service.delete(id);
 	}
@@ -49,12 +49,12 @@ public class PersonController {
 	// de la requete HTTP vers une instance de PersonCreateDto
 	// @Valid : cascader la validation sur le DTO, permet si besoin
 	// de ne pas valider un meme DTO
-	@PostMapping // POST "/persons"
+	@PostMapping // POST "/api/persons"
 	public void create(@RequestBody @Valid PersonCreateDto dto) {
 		service.create(dto);
 	}
 
-	@GetMapping // GET "/persons" pas d'id, retourne toute la collection de ressources
+	@GetMapping // GET "/api/persons" pas d'id, retourne toute la collection de ressources
 	public List<PersonDto> getAll() {
 		return service.getAll();
 	}

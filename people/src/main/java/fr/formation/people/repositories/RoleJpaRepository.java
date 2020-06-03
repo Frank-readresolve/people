@@ -21,5 +21,8 @@ public interface RoleJpaRepository extends JpaRepository<Role, Long> {
 	// List<Role> findByDefaultRoleFalse();
 
 	Role findByDefaultRoleTrue();
+	
+	// Equivalent:
+	// Role findByDefaultRole(boolean value);
 
 }
